@@ -498,6 +498,95 @@ function bottomHead() {
     }
 }
 
+
+ 
+$(document).ready(function(){
+    if(window.location.pathname.indexOf("/sakarya-hemen1") === -1){
+        console.log("Sakarya menü çalışmıyor çünkü path eşleşmedi:", window.location.pathname);
+        return;
+    }
+
+    // JSON verisi
+    var data;
+    try {
+        data = JSON.parse($('#ysn-category-data').text());
+    } catch(e){
+        console.error("Sakarya Menü JSON hatası:", e);
+        return;
+    }
+
+    var ikonlar = data.ikonlar;
+
+    // Menü oluştur
+    function buildMenu() {
+        var html = '';
+        $.each(data.kategoriler, function(i, kat){
+            var hasAlt = kat.alt && kat.alt.length > 0;
+            html += '<li class="'+(hasAlt?'ulVar':'')+'">';
+            html += '<a href="'+kat.link+'">'+kat.ad+'</a>';
+            if(hasAlt){
+                html += '<div class="Flexscroll"><div class="altWrapper">';
+                $.each(kat.alt,function(j, alt){
+                    var iconClass = ikonlar[alt.ad] || ikonlar["varsayilan"];
+                    html += '<div class="altItem">';
+                    html += '<a href="'+alt.link+'">';
+                    html += '<div class="altIcon"><i class="'+iconClass+'"></i></div>';
+                    html += '<span class="altText">'+alt.ad+'</span>';
+                    html += '</a></div>';
+                });
+                html += '</div></div>';
+            }
+            html += '</li>';
+        });
+        return html;
+    }
+
+    // Menü DOM'a ekleme
+    var menuHtml = buildMenu();
+    $('.navigation, #divUcTopMenu, .HeaderMenu2 .navUl').each(function(){
+        if(!$(this).is('ul')){
+            $(this).empty().append('<ul class="navUl">'+menuHtml+'</ul>');
+        } else {
+            $(this).empty().append(menuHtml);
+        }
+    });
+
+    // Mobil aç/kapa
+    function setupMobile() {
+        if($(window).width() < 768){
+            $(document).on('click', '.navUl > li.ulVar > a', function(e){
+                e.preventDefault();
+                var parentLi = $(this).parent('li');
+                var menu = parentLi.find('.Flexscroll').first();
+                if(menu.is(':visible')){
+                    menu.slideUp(200);
+                } else {
+                    $('.Flexscroll').slideUp(200);
+                    menu.slideDown(200);
+                }
+            });
+        }
+    }
+
+    setupMobile();
+
+    // Masaüstü hover + scroll ile kapatma
+    if($(window).width() >= 768){
+        $(window).on('scroll', function(){
+            $('.Flexscroll').css('max-height','0');
+        });
+        $(document).on('mouseenter','.ulVar',function(){
+            $(this).find('.Flexscroll').css({'max-height':'600px','padding':'24px 0'});
+        }).on('mouseleave','.ulVar',function(){
+            $(this).find('.Flexscroll').css({'max-height':'0','padding':'0'});
+        });
+    }
+
+    console.log("Sakarya Hemen1 menü DOM’a eklendi.");
+});
+ 
+
+/*
 $(document).ready(function(){
 
     // JSON datası
@@ -792,6 +881,7 @@ $(document).ready(function () {
     }
 
 });
+
 
 
 
