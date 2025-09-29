@@ -497,7 +497,7 @@ function bottomHead() {
         cntrlBot = true;
     }
 }
-
+/*
 $(document).ready(function () {
 
     // Font Awesome CSS ekle
@@ -602,3 +602,4 @@ $(document).ready(function () {
     }
 
 });
+
