@@ -482,7 +482,7 @@ function bottomHead() {
     }
 
 }
-```javascript
+ 
 function closeAllMenus() {
     $('.Flexscroll').slideUp(200, function () {
         $('body').css('overflow', '');
@@ -604,6 +604,7 @@ $(document).ready(function () {
         });
     }
 });
+
 
 
 
