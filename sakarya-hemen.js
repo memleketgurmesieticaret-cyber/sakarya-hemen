@@ -473,16 +473,31 @@ function SepetEkrani() {
     urunKartCallBack();
 }
 
+// Başlangıçta değişkenleri tanımla
 var cntrlBot = false;
+
+// Dummy translateIt ve siteSettings, sayfanda varsa kendi fonksiyonlarını kullan
+if (typeof translateIt !== 'function') {
+    function translateIt(text) { return text; } // Çeviri yoksa metni aynen döndür
+}
+
+if (typeof siteSettings === 'undefined') {
+    var siteSettings = { isAuthenticated: false };
+}
+
+// Menü ve bottomHead fonksiyonu
 function bottomHead() {
-    if (!cntrlBot && $('.bottomHead').length==0) {
-        $('body:not(.sepetimBody)').append('<div class="bottomHead"> <ul> <li class="homeC"> <a href="/"><i class="fal fa-home"></i><span>'+translateIt("GlobalMasterPage_Anasayfa")+'</span></a> </li> <li class="favoC"> <a href="javascript:void(0)" onclick="GirisKontrol(0)"><i class="fal fa-heart"></i><span>'+translateIt("Favorilerim_Baslik")+'</span><div class="favNum"></div></a> </li> <li class="cartC"> <a href="/sepetim.aspx"><i class="fal fa-shopping-cart"></i><span>'+translateIt("GlobalMasterPage_Sepetim")+'</span></a> </li> <li class="welcC"> <a href="javascript:void(0)" onclick="GirisKontrol(0)"><i class="fal fa-user"></i><span>'+translateIt("GlobalMasterPage_MobilUyeGirisi")+'</span></a> </li> </ul> </div>');
-        if (siteSettings.isAuthenticated == true) {$('.welcC a').attr('href','/hesabim.aspx'); $('.favoC a').attr('href','/Hesabim.aspx/#/Favorilerim'); $('.welcC span').html(translateIt("GlobalMasterPage_MobilHesabim")); }
+    if (!cntrlBot && $('.bottomHead').length == 0) {
+        $('body:not(.sepetimBody)').append('<div class="bottomHead"> <ul> <li class="homeC"> <a href="/"><i class="fa-solid fa-home"></i><span>'+translateIt("GlobalMasterPage_Anasayfa")+'</span></a> </li> <li class="favoC"> <a href="javascript:void(0)" onclick="GirisKontrol && GirisKontrol(0)"><i class="fa-regular fa-heart"></i><span>'+translateIt("Favorilerim_Baslik")+'</span><div class="favNum"></div></a> </li> <li class="cartC"> <a href="/sepetim.aspx"><i class="fa-solid fa-shopping-cart"></i><span>'+translateIt("GlobalMasterPage_Sepetim")+'</span></a> </li> <li class="welcC"> <a href="javascript:void(0)" onclick="GirisKontrol && GirisKontrol(0)"><i class="fa-solid fa-user"></i><span>'+translateIt("GlobalMasterPage_MobilUyeGirisi")+'</span></a> </li> </ul> </div>');
+        if (siteSettings.isAuthenticated === true) {
+            $('.welcC a').attr('href','/hesabim.aspx');
+            $('.favoC a').attr('href','/Hesabim.aspx/#/Favorilerim');
+            $('.welcC span').html(translateIt("GlobalMasterPage_MobilHesabim"));
+        }
         cntrlBot = true;
     }
-
 }
- 
+
 $(document).ready(function () {
 
     // Font Awesome CSS ekle
@@ -493,6 +508,9 @@ $(document).ready(function () {
         }).appendTo("head");
     }
 
+    // BottomHead fonksiyonunu çağır
+    bottomHead();
+
     // Navigation boş iskeleti yoksa ekle
     if (!$('.navigation .navUl').length) {
         $(".navigation").append('<ul class="navUl"></ul>');
@@ -501,6 +519,7 @@ $(document).ready(function () {
     // Menü sınıfı ekle
     $('.navigation').addClass('sakaryaMenuNav');
 
+    // İkonlar
     var ikonlar = {
         "Meyve": "fa-solid fa-apple-whole",
         "Sebze": "fa-solid fa-carrot",
@@ -514,6 +533,7 @@ $(document).ready(function () {
         "varsayilan": "fa-solid fa-bag-shopping"
     };
 
+    // Kategoriler
     var kategoriler = [
         {
             ad: "Meyve & Sebze",
@@ -534,6 +554,7 @@ $(document).ready(function () {
         }
     ];
 
+    // Menü HTML oluştur
     var html = '';
     $.each(kategoriler, function (i, kat) {
         var hasAlt = kat.alt && kat.alt.length > 0;
