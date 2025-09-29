@@ -15,12 +15,11 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 } 
-/* 
 .SayfaIcerik .navigation {
-    display: flex !important;
-    background: rgb(255 255 255 / 0) !important;
+    display: initial !important;
+    background: transparent !important;
 }
-*/
+
 
 /*Fadein Css*/
 @media(min-width: 768px) {
@@ -12047,6 +12046,7 @@ button[type="submit"]:hover {
         z-index: 9999;
     
 }
+
 
 
 
