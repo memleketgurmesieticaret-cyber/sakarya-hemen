@@ -1,3 +1,4 @@
+/***************************SAKARYA HEMEN GİT*************/
 var windowidth = document.documentElement.clientWidth; 
 var urunDetay_varyasyonSecili = true; 
 var urunDuzeniTipi = 0; 
@@ -603,5 +604,6 @@ $(document).ready(function () {
         });
     }
 });
+
 
 
