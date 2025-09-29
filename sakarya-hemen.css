@@ -14,7 +14,7 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-}
+} 
 .SayfaIcerik .navigation {
   display: flex !important;
   background: #fff !important;
@@ -12045,4 +12045,5 @@ button[type="submit"]:hover {
         z-index: 9999;
     
 }
+
 
