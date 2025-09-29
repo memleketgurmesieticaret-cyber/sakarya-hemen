@@ -498,6 +498,78 @@ function bottomHead() {
     }
 }
 
+$(document).ready(function(){
+
+    // JSON datası
+    var data;
+    try {
+        data = JSON.parse($('#ysn-category-data').text());
+    } catch(e){
+        console.error("Kategori JSON hatası:", e);
+        return;
+    }
+
+    function buildMenu(container){
+        var html = '';
+        $.each(data.kategoriler, function(i, kat){
+            var hasAlt = kat.alt && kat.alt.length > 0;
+            html += '<li class="'+(hasAlt?'ulVar':'')+'">';
+            html += '<a href="'+kat.link+'">'+kat.ad+'</a>';
+
+            if(hasAlt){
+                html += '<div class="Flexscroll"><div class="altWrapper">';
+                $.each(kat.alt, function(j, alt){
+                    var iconClass = data.ikonlar[alt.ad] || data.ikonlar["varsayilan"];
+                    html += '<div class="altItem">';
+                    html += '<a href="'+alt.link+'">';
+                    html += '<div class="altIcon"><i class="'+iconClass+'"></i></div>';
+                    html += '<span class="altText">'+alt.ad+'</span>';
+                    html += '</a></div>';
+                });
+                html += '</div></div>';
+            }
+
+            html += '</li>';
+        });
+
+        container.empty().append(html);
+        container.addClass('sakaryaMenuNav'); // opsiyonel, CSS için
+    }
+
+    // Menü hedefleri
+    $('.navigation, #divUcTopMenu, .HeaderMenu2 .navUl').each(function(){
+        buildMenu($(this));
+    });
+
+    // Mobile aç/kapa
+    $(document).on('click', '.navigation li.ulVar > a', function(e){
+        if($(window).width() < 768){
+            e.preventDefault();
+            var menu = $(this).siblings('.Flexscroll');
+            if(menu.is(':visible')){
+                menu.slideUp(200);
+            } else {
+                $('.Flexscroll').slideUp(200);
+                menu.slideDown(200);
+            }
+        }
+    });
+
+    // Desktop hover ve scroll ile kapatma
+    if($(window).width() >= 768){
+        $(document).on('mouseenter', '.ulVar', function(){
+            $(this).find('.Flexscroll').css({'max-height':'600px','padding':'24px 0'});
+        }).on('mouseleave', '.ulVar', function(){
+            $(this).find('.Flexscroll').css({'max-height':'0','padding':'0'});
+        });
+
+        $(window).on('scroll', function(){
+            $('.Flexscroll').css({'max-height':'0','padding':'0'});
+        });
+    }
+
+});
+
 /*
 function sakaryaDesktopMenu(kategoriler, ikonlar) {
     var html = '';
@@ -720,6 +792,7 @@ $(document).ready(function () {
     }
 
 });
+
 
 
 
