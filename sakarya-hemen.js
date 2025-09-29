@@ -497,6 +497,123 @@ function bottomHead() {
         cntrlBot = true;
     }
 }
+
+function sakaryaDesktopMenu(kategoriler, ikonlar) {
+    var html = '';
+    $.each(kategoriler, function(i, kat){
+        var hasAlt = kat.alt && kat.alt.length > 0;
+        html += '<li class="'+(hasAlt?'ulVar':'')+'">';
+        html += '<a href="'+kat.link+'">'+kat.ad+'</a>';
+
+        if(hasAlt){
+            html += '<div class="Flexscroll"><ul>';
+            $.each(kat.alt, function(j, alt){
+                var iconClass = ikonlar[alt.ad] || ikonlar["varsayilan"];
+                html += '<li>';
+                html += '<a href="'+alt.link+'">';
+                html += '<div class="altIcon"><i class="'+iconClass+'"></i></div>';
+                html += '<div class="altText">'+alt.ad+'</div>';
+                html += '</a></li>';
+            });
+            html += '</ul></div>';
+        }
+
+        html += '</li>';
+    });
+
+    // Menüleri belirtilen alanlara ekle
+    $('.navigation, #divUcTopMenu, .HeaderMenu2 .navUl').each(function(){
+        if(!$(this).is('ul')){
+            $(this).empty().append('<ul class="navUl">'+html+'</ul>');
+        } else {
+            $(this).empty().append(html);
+        }
+    });
+
+    // Desktop hover davranışı
+    if ($(window).width() >= 992) {
+        $(document).on('mouseenter', '.ulVar', function(){
+            $(this).find('.Flexscroll').css({'max-height':'600px','padding':'24px 0'});
+        }).on('mouseleave', '.ulVar', function(){
+            $(this).find('.Flexscroll').css({'max-height':'0','padding':'0'});
+        });
+
+        $(window).on('scroll', function(){
+            $('.Flexscroll').css({'max-height':'0','padding':'0'});
+        });
+    }
+}
+
+function sakaryaMobileMenu(kategoriler, ikonlar) {
+    var anaMenuHtml = '<ul class="navUl">';
+    $.each(kategoriler,function(i,kat){
+        var hasAlt = kat.alt && kat.alt.length > 0;
+        anaMenuHtml += '<li><a href="#" class="main-item" data-index="'+i+'">'+kat.ad+(hasAlt?' ›':'')+'</a></li>';
+    });
+    anaMenuHtml += '</ul>';
+
+    $(document).on('click','.mobile-menu-btn',function(){
+        $('.mobile-menu').addClass('acik');
+        $('.menu-content-area').html(anaMenuHtml);
+    });
+
+    $(document).on('click','.main-item',function(e){
+        e.preventDefault();
+        var index = $(this).data('index');
+        var kat = kategoriler[index];
+        if(kat.alt && kat.alt.length){
+            var altHtml = '<ul class="sub-list"><li><a href="#" class="go-back">‹ Geri</a></li><div class="mobile-flex-wrapper">';
+            $.each(kat.alt,function(j,alt){
+                var iconClass = ikonlar[alt.ad] || ikonlar["varsayilan"];
+                altHtml += '<li>';
+                altHtml += '<a href="'+alt.link+'">';
+                altHtml += '<div class="altIcon"><i class="'+iconClass+'"></i></div>';
+                altHtml += '<div class="altText">'+alt.ad+'</div>';
+                altHtml += '</a></li>';
+            });
+            altHtml += '</div></ul>';
+            $('.menu-content-area').html(altHtml);
+        } else {
+            window.location.href = kat.link;
+        }
+    });
+
+    $(document).on('click','.go-back',function(e){
+        e.preventDefault();
+        $('.menu-content-area').html(anaMenuHtml);
+    });
+
+    $(document).on('click','.menu-close',function(){
+        $('.mobile-menu').removeClass('acik');
+        $('.menu-content-area').empty();
+    });
+}
+
+$(document).ready(function(){
+    if(window.location.pathname.indexOf("/sakarya-hemen1") === -1) return;
+
+    var data;
+    try {
+        data = JSON.parse($('#ysn-category-data').text());
+        console.log("Kategori datası alındı:", data);
+    } catch(e){
+        console.error("JSON hatası:", e);
+        return;
+    }
+
+    var observer = new MutationObserver(function(mutations, obs){
+        var el = $('.navigation, #divUcTopMenu, .HeaderMenu2 .navUl');
+        if(el.length){
+            sakaryaDesktopMenu(data.kategoriler, data.ikonlar);
+            sakaryaMobileMenu(data.kategoriler, data.ikonlar);
+            console.log("✅ Sakarya menü DOM’a eklendi");
+            obs.disconnect();
+        }
+    });
+
+    observer.observe(document.body, {childList:true, subtree:true});
+});
+
 /*
 $(document).ready(function () {
 
@@ -602,4 +719,5 @@ $(document).ready(function () {
     }
 
 });
+
 
