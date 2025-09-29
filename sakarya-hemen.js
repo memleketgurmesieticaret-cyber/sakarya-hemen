@@ -499,7 +499,7 @@ function bottomHead() {
 }
 
 
- 
+ <script>
 $(document).ready(function(){
     if(window.location.pathname.indexOf("/sakarya-hemen1") === -1){
         console.log("Sakarya menü çalışmıyor çünkü path eşleşmedi:", window.location.pathname);
@@ -585,7 +585,7 @@ $(document).ready(function(){
     console.log("Sakarya Hemen1 menü DOM’a eklendi.");
 });
  
-
+</script>
 /*
 $(document).ready(function(){
 
@@ -881,6 +881,7 @@ $(document).ready(function () {
     }
 
 });
+
 
 
 
