@@ -499,7 +499,7 @@ function bottomHead() {
 }
 
 
- <script>
+ 
 $(document).ready(function(){
     if(window.location.pathname.indexOf("/sakarya-hemen1") === -1){
         console.log("Sakarya menü çalışmıyor çünkü path eşleşmedi:", window.location.pathname);
@@ -585,7 +585,72 @@ $(document).ready(function(){
     console.log("Sakarya Hemen1 menü DOM’a eklendi.");
 });
  
-</script>
+
+
+
+
+    $(document).ready(function(){
+    // Sadece sakarya-hemen1 sayfası
+    if(window.location.pathname.indexOf("/sakarya-hemen1") === -1) return;
+
+    var data;
+    try { 
+        data = JSON.parse($('#ysn-category-data').text()); 
+    } catch(e){ 
+        console.error("JSON hatası:", e); 
+        return; 
+    }
+
+    // Menü oluşturma fonksiyonu
+    function buildMenu(target){
+        var html = '';
+        $.each(data.kategoriler, function(i, kat){
+            var hasAlt = kat.alt && kat.alt.length>0;
+            html += '<li class="'+(hasAlt?'ulVar':'')+'">';
+            html += '<a href="'+kat.link+'">'+kat.ad+'</a>';
+            if(hasAlt){
+                html += '<div class="Flexscroll"><div class="altWrapper">';
+                $.each(kat.alt, function(j, alt){
+                    var iconClass = data.ikonlar[alt.ad] || data.ikonlar["varsayilan"];
+                    html += '<div class="altItem">';
+                    html += '<a href="'+alt.link+'">';
+                    html += '<div class="altIcon"><i class="'+iconClass+'"></i></div>';
+                    html += '<div class="altText">'+alt.ad+'</div>';
+                    html += '</a></div>';
+                });
+                html += '</div></div>';
+            }
+            html += '</li>';
+        });
+
+        // Yalnızca hedeflenen menülere ekle
+        $(target).each(function(){
+            if(!$(this).is('ul')){
+                $(this).empty().append('<ul class="navUl">'+html+'</ul>');
+            } else {
+                $(this).empty().append(html);
+            }
+        });
+    }
+
+    buildMenu('.navigation, #divUcTopMenu, .HeaderMenu2 .navUl');
+
+    // Mobil menü aç/kapa
+    if ($(window).width()<768){
+        $(document).on('click','.navUl > li.ulVar > a', function(e){
+            e.preventDefault();
+            var menu = $(this).siblings('.Flexscroll').first();
+            if(menu.is(':visible')) menu.slideUp(200);
+            else $('.Flexscroll').slideUp(200).end().siblings('.Flexscroll').slideDown(200);
+        });
+    }
+
+    // Desktop scroll ile kapatma
+    if ($(window).width()>=768){
+        $(window).on('scroll', function(){ $('.Flexscroll').css('max-height','0'); });
+    }
+});
+
 /*
 $(document).ready(function(){
 
@@ -881,6 +946,7 @@ $(document).ready(function () {
     }
 
 });
+
 
 
 
