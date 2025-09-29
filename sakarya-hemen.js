@@ -498,6 +498,7 @@ function bottomHead() {
     }
 }
 
+/*
 function sakaryaDesktopMenu(kategoriler, ikonlar) {
     var html = '';
     $.each(kategoriler, function(i, kat){
@@ -719,5 +720,6 @@ $(document).ready(function () {
     }
 
 });
+
 
 
