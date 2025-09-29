@@ -483,46 +483,22 @@ function bottomHead() {
 
 }
  
-function closeAllMenus() {
-    $('.Flexscroll').slideUp(200, function () {
-        $('body').css('overflow', '');
-    });
-}
-
-// Mobil davranış
-if ($(window).width() < 768) {
-    $(document).on('click', '.navigation .navUl li.ulVar > a', function (e) {
-        e.preventDefault();
-        var parentLi = $(this).parent('li');
-        var menu = parentLi.find('.Flexscroll').first();
-
-        if (menu.is(':visible')) {
-            menu.slideUp(200, function () {
-                $('body').css('overflow', '');
-            });
-        } else {
-            closeAllMenus();
-            menu.slideDown(200, function () {
-                $('body').css('overflow', 'hidden');
-            });
-        }
-    });
-
-    // Dışarı tıklamayla kapatma
-    $(document).on('click', function (e) {
-        if (!$(e.target).closest('.Flexscroll, .ulVar').length) {
-            closeAllMenus();
-        }
-    });
-}
-
-// Masaüstünde scroll ile kapatma
-if ($(window).width() >= 768) {
-    $(window).on('scroll', function () {
-        $('.Flexscroll').css('max-height', '0');
-    });
-}
 $(document).ready(function () {
+
+    // Font Awesome CSS ekle
+    if (!$('link[href*="font-awesome"]').length) {
+        $('<link>', {
+            rel: "stylesheet",
+            href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        }).appendTo("head");
+    }
+
+    // Navigation boş iskeleti yoksa ekle
+    if (!$('.navigation .navUl').length) {
+        $(".navigation").append('<ul class="navUl"></ul>');
+    }
+
+    // Menü sınıfı ekle
     $('.navigation').addClass('sakaryaMenuNav');
 
     var ikonlar = {
@@ -603,8 +579,5 @@ $(document).ready(function () {
             $('.Flexscroll').css('max-height', '0');
         });
     }
+
 });
-
-
-
-
