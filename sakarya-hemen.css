@@ -12022,30 +12022,9 @@ button[type="submit"]:hover {
         font-size: 12px;
     }
   /* Masaüstü menüyü mobilde gizle */
-@media only screen and (max-width: 991px) {
-    .header-menu, 
-    .main-menu, 
-    .desktop-menu {
-        display: none !important;
-    }
 
-    /* Mobil menüyü aktif et */
-    .mobile-menu, 
-    .mobile-nav, 
-    .hamburger-menu {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
+@media (max-width: 767px) { .Flexscroll { flex-wrap: wrap; } }
 
-    /* Mobil menü ikonunun görünmesi için */
-    .menu-toggle, 
-    .hamburger {
-        display: inline-block !important;
-        cursor: pointer;
-        z-index: 9999;
-    
-}
 
 
 
