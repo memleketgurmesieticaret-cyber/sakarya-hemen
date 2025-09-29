@@ -650,6 +650,16 @@ $(document).ready(function(){
         $(window).on('scroll', function(){ $('.Flexscroll').css('max-height','0'); });
     }
 });
+var observer = new MutationObserver(function(mutations, obs){
+    var nav = $('.navigation ul');
+    if(nav.length){
+        // Menü oluşturma fonksiyonunu burada çağır
+        buildSakaryaMenu();
+        obs.disconnect();
+    }
+});
+
+observer.observe(document.body, {childList:true, subtree:true});
 
 /*
 $(document).ready(function(){
@@ -946,6 +956,7 @@ $(document).ready(function () {
     }
 
 });
+
 
 
 
