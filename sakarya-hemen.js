@@ -521,4 +521,87 @@ if ($(window).width() >= 768) {
         $('.Flexscroll').css('max-height', '0');
     });
 }
+$(document).ready(function () {
+    $('.navigation').addClass('sakaryaMenuNav');
+
+    var ikonlar = {
+        "Meyve": "fa-solid fa-apple-whole",
+        "Sebze": "fa-solid fa-carrot",
+        "Yeşillik": "fa-solid fa-leaf",
+        "Kırmızı Et": "fa-solid fa-cow",
+        "Beyaz Et": "fa-solid fa-drumstick-bite",
+        "Izgaralık Ürünler": "fa-solid fa-hotdog",
+        "Kuzu Eti": "fa-solid fa-drumstick-bite",
+        "Bakliyat": "fa-solid fa-seedling",
+        "Unlar": "fa-solid fa-wheat-awn",
+        "varsayilan": "fa-solid fa-bag-shopping"
+    };
+
+    var kategoriler = [
+        {
+            ad: "Meyve & Sebze",
+            link: "/sakarya-hemen/meyve-sebze",
+            alt: [
+                { ad: "Meyve", link: "/sakarya-hemen/meyve" },
+                { ad: "Sebze", link: "/sakarya-hemen/sebze" },
+                { ad: "Yeşillik", link: "/sakarya-hemen/yesillik" }
+            ]
+        },
+        {
+            ad: "Et ve Tavuk",
+            link: "/sakarya-hemen/et-tavuk",
+            alt: [
+                { ad: "Kırmızı Et", link: "/sakarya-hemen/kirmizi-et" },
+                { ad: "Beyaz Et", link: "/sakarya-hemen/beyaz-et" }
+            ]
+        }
+    ];
+
+    var html = '';
+    $.each(kategoriler, function (i, kat) {
+        var hasAlt = kat.alt && kat.alt.length > 0;
+        var liClass = hasAlt ? "ulVar" : "";
+        html += '<li class="' + liClass + '">';
+        html += '<a href="' + kat.link + '">' + kat.ad + '</a>';
+        if (hasAlt) {
+            html += '<div class="Flexscroll"><ul>';
+            $.each(kat.alt, function (j, altkat) {
+                var iconClass = ikonlar[altkat.ad] || ikonlar["varsayilan"];
+                html += '<li>';
+                html += '<a href="' + altkat.link + '">';
+                html += '<div class="altIcon"><i class="' + iconClass + '"></i></div>';
+                html += '<div class="altText">' + altkat.ad + '</div>';
+                html += '</a></li>';
+            });
+            html += '</ul></div>';
+        }
+        html += '</li>';
+    });
+
+    $('.navigation .navUl').html(html);
+
+    // Mobil menü aç/kapa
+    if ($(window).width() < 768) {
+        $(document).on('click', '.navigation .navUl > li.ulVar > a', function (e) {
+            e.preventDefault();
+            var parentLi = $(this).parent('li');
+            var menu = parentLi.find('.Flexscroll').first();
+
+            if (menu.is(':visible')) {
+                menu.slideUp(200);
+            } else {
+                $('.Flexscroll').slideUp(200);
+                menu.slideDown(200);
+            }
+        });
+    }
+
+    // Masaüstünde scroll ile kapatma
+    if ($(window).width() >= 768) {
+        $(window).on('scroll', function () {
+            $('.Flexscroll').css('max-height', '0');
+        });
+    }
+});
+
 
