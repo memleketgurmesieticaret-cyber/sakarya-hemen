@@ -649,7 +649,168 @@ $(document).ready(function(){
     if ($(window).width()>=768){
         $(window).on('scroll', function(){ $('.Flexscroll').css('max-height','0'); });
     }
+});  
+
+<script id="ysn-category-data" type="application/json">
+{
+  "ikonlar": {
+    "Meyve": "fa-solid fa-apple-whole",
+    "Sebze": "fa-solid fa-carrot",
+    "Yeşillik": "fa-solid fa-leaf",
+    "Kırmızı Et": "fa-solid fa-cow",
+    "Beyaz Et": "fa-solid fa-chicken",
+    "Izgaralık Ürünler": "fa-solid fa-hotdog",
+    "Kuzu Eti": "fa-solid fa-sheep",
+    "Bakliyat": "fa-solid fa-seedling",
+    "Unlar": "fa-solid fa-wheat-awn",
+    "Sirke & Bitki Suları": "fa-solid fa-bottle-droplet",
+    "Salçalar": "fa-solid fa-jar",
+    "Yulaf Ezmesi": "fa-solid fa-oat",
+    "Yeşil Zeytin": "fa-solid fa-olive",
+    "Siyah Zeytin": "fa-solid fa-circle",
+    "Zeytinyağı": "fa-solid fa-tint",
+    "Kahvaltılık Soslar": "fa-solid fa-pepper-hot",
+    "Ezmeler": "fa-solid fa-cheese",
+    "Reçel": "fa-solid fa-jar-wheat",
+    "Bal Çeşitleri": "fa-solid fa-honey-pot",
+    "Tahin & Pekmez": "fa-solid fa-blender",
+    "Helva": "fa-solid fa-cookie",
+    "Kuruyemiş": "fa-solid fa-peanut",
+    "Meyve ve Protein Barları": "fa-solid fa-grip-lines",
+    "Kuru Meyve": "fa-solid fa-a-bit",
+    "Hurmalar": "fa-solid fa-hand-holding-hand",
+    "Galeta & Kraker": "fa-solid fa-bread-slice",
+    "Kurabiye Çeşitleri": "fa-solid fa-cookie-bite",
+    "varsayilan": "fa-solid fa-bag-shopping"
+  },
+  "kategoriler": [
+    {
+      "ad": "Meyve & Sebze",
+      "link": "/sakarya-hemen/meyve-sebze",
+      "alt": [
+        { "ad": "Meyve", "link": "/sakarya-hemen/meyve" },
+        { "ad": "Sebze", "link": "/sakarya-hemen/sebze" },
+        { "ad": "Yeşillik", "link": "/sakarya-hemen/yesillik" }
+      ]
+    },
+    {
+      "ad": "Et ve Tavuk Ürünleri",
+      "link": "/sakarya-hemen/et-ve-tavuk-urunleri",
+      "alt": [
+        { "ad": "Kırmızı Et", "link": "/sakarya-hemen/kirmizi-et" },
+        { "ad": "Beyaz Et", "link": "/sakarya-hemen/beyaz-et" },
+        { "ad": "Izgaralık Ürünler", "link": "/sakarya-hemen/izgaralik-urunler" },
+        { "ad": "Kuzu Eti", "link": "/sakarya-hemen/kuzu-eti" }
+      ]
+    },
+    {
+      "ad": "Temel Gıda",
+      "link": "/sakarya-hemen/temel-gida",
+      "alt": [
+        { "ad": "Bakliyat", "link": "/sakarya-hemen/bakliyat" },
+        { "ad": "Unlar", "link": "/sakarya-hemen/un-cesitleri" },
+        { "ad": "Sirke & Bitki Suları", "link": "/sakarya-hemen/sirke-ve-bitki-sulari" },
+        { "ad": "Salçalar", "link": "/sakarya-hemen/salcalar" },
+        { "ad": "Yulaf Ezmesi", "link": "/sakarya-hemen/yulaf-ezmesi" }
+      ]
+    },
+    {
+      "ad": "Zeytin & Zeytinyağı",
+      "link": "/zeytin-ve-zeytinyagi",
+      "alt": [
+        { "ad": "Yeşil Zeytin", "link": "/sakarya-hemen/yesil-zeytin" },
+        { "ad": "Siyah Zeytin", "link": "/sakarya-hemen/siyah-zeytin" },
+        { "ad": "Zeytinyağı", "link": "/sakarya-hemen/zeytin-yagi" }
+      ]
+    },
+    {
+      "ad": "Kahvaltılıklar",
+      "link": "/kahvaltiliklar",
+      "alt": [
+        { "ad": "Kahvaltılık Soslar", "link": "/sakarya-hemen/kahvaltilik-soslar" },
+        { "ad": "Ezmeler", "link": "/sakarya-hemen/ezmeler" },
+        { "ad": "Reçel", "link": "/sakarya-hemen/receller" },
+        { "ad": "Bal Çeşitleri", "link": "/sakarya-hemen/organik-ballar" },
+        { "ad": "Tahin & Pekmez", "link": "/sakarya-hemen/pekmez-ve-tahin" },
+        { "ad": "Helva", "link": "/sakarya-hemen/helvalar" }
+      ]
+    },
+    { "ad": "Baharatlar", "link": "/baharatlar", "alt": [] },
+    {
+      "ad": "Sağlıklı Atıştırmalıklar",
+      "link": "/sakarya-hemen/saglikli-atistirmaliklar",
+      "alt": [
+        { "ad": "Kuruyemiş", "link": "/sakarya-hemen/kuruyemis" },
+        { "ad": "Meyve ve Protein Barları", "link": "/sakarya-hemen/barlar" },
+        { "ad": "Kuru Meyve", "link": "/sakarya-hemen/kuru-meyve" },
+        { "ad": "Hurmalar", "link": "/sakarya-hemen/hurmalar" },
+        { "ad": "Galeta & Kraker", "link": "/sakarya-hemen/galeta-kraker" },
+        { "ad": "Kurabiye Çeşitleri", "link": "/sakarya-hemen/kurabiye-cesitleri" }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+$(document).ready(function(){
+    // Sadece sakarya-hemen1 sayfasında çalıştır
+    if(window.location.pathname.indexOf('sakarya-hemen1') === -1) return;
+
+    // JSON veriyi çek
+    var data = JSON.parse($('#ysn-category-data').text());
+    var ikonlar = data.ikonlar;
+    var kategoriler = data.kategoriler;
+
+    // Menü oluşturma
+    var html = '';
+    $.each(kategoriler, function(i, kat){
+        var hasAlt = kat.alt && kat.alt.length>0;
+        var liClass = hasAlt ? "ulVar" : "";
+        html += '<li class="'+liClass+'">';
+        html += '<a href="'+kat.link+'">'+kat.ad+'</a>';
+        if(hasAlt){
+            html += '<div class="Flexscroll"><div class="altWrapper">';
+            $.each(kat.alt, function(j, altkat){
+                var iconClass = ikonlar[altkat.ad] || ikonlar["varsayilan"];
+                html += '<div class="altItem">';
+                html += '<a href="'+altkat.link+'">';
+                html += '<div class="altIcon"><i class="'+iconClass+'"></i></div>';
+                html += '<span class="altText">'+altkat.ad+'</span></a></div>';
+            });
+            html += '</div></div>';
+        }
+        html += '</li>';
+    });
+    $('.navigation .navUl').html(html);
+
+    // Mobil aç/kapa
+    function closeAllMenus(){
+        $('.Flexscroll').slideUp(200, function(){ $('body').css('overflow',''); });
+    }
+
+    if($(window).width()<768){
+        $(document).on('click', '.navigation .navUl li.ulVar > a', function(e){
+            e.preventDefault();
+            var menu = $(this).siblings('.Flexscroll');
+            if(menu.is(':visible')) menu.slideUp(200, function(){ $('body').css('overflow',''); });
+            else{ closeAllMenus(); menu.slideDown(200, function(){ $('body').css('overflow','hidden'); }); }
+        });
+        $(document).on('click', function(e){
+            if(!$(e.target).closest('.Flexscroll, li.ulVar').length) closeAllMenus();
+        });
+    }
+
+    if($(window).width()>=768){
+        $(window).on('scroll', function(){ $('.Flexscroll').css('max-height','0'); });
+    }
+
 });
+</script>
+
+
+
+
 var observer = new MutationObserver(function(mutations, obs){
     var nav = $('.navigation ul');
     if(nav.length){
@@ -956,6 +1117,7 @@ $(document).ready(function () {
     }
 
 });
+
 
 
 
