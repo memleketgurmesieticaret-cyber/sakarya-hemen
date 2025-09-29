@@ -8018,7 +8018,7 @@ vertical-align: middle;
 display: block;
 padding: 15px 20px;
 text-decoration: none;
-color: #4d270d;
+color: #000;
 font-size: 14px;
 font-weight: 600;
 line-height: 42px;
@@ -12047,6 +12047,7 @@ button[type="submit"]:hover {
         z-index: 9999;
     
 }
+
 
 
 
