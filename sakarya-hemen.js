@@ -479,4 +479,46 @@ function bottomHead() {
         if (siteSettings.isAuthenticated == true) {$('.welcC a').attr('href','/hesabim.aspx'); $('.favoC a').attr('href','/Hesabim.aspx/#/Favorilerim'); $('.welcC span').html(translateIt("GlobalMasterPage_MobilHesabim")); }
         cntrlBot = true;
     }
+
 }
+```javascript
+function closeAllMenus() {
+    $('.Flexscroll').slideUp(200, function () {
+        $('body').css('overflow', '');
+    });
+}
+
+// Mobil davranış
+if ($(window).width() < 768) {
+    $(document).on('click', '.navigation .navUl li.ulVar > a', function (e) {
+        e.preventDefault();
+        var parentLi = $(this).parent('li');
+        var menu = parentLi.find('.Flexscroll').first();
+
+        if (menu.is(':visible')) {
+            menu.slideUp(200, function () {
+                $('body').css('overflow', '');
+            });
+        } else {
+            closeAllMenus();
+            menu.slideDown(200, function () {
+                $('body').css('overflow', 'hidden');
+            });
+        }
+    });
+
+    // Dışarı tıklamayla kapatma
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest('.Flexscroll, .ulVar').length) {
+            closeAllMenus();
+        }
+    });
+}
+
+// Masaüstünde scroll ile kapatma
+if ($(window).width() >= 768) {
+    $(window).on('scroll', function () {
+        $('.Flexscroll').css('max-height', '0');
+    });
+}
+
